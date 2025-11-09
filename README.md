@@ -78,5 +78,5 @@ npm start
 
 ### Main page for reference
 
-![Description of image](assets/starship-table.JPG)
+![Starship Table](public/images/starship-table.JPG)
 
