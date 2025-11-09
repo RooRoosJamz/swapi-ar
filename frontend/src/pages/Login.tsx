@@ -20,6 +20,7 @@ const Login: React.FC = () => {
       const response = await api.post("/auth/login", { username, password });
       const { token, role } = response.data;
       login(token, role);
+      console.log("Role after login:", role);
       navigate("/starships");
     } catch (err: any) {
       console.error("Login failed:", err);

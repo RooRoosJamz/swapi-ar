@@ -59,7 +59,7 @@ namespace SWAPI_AR.Api.Controllers
                 );
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-            return Ok(new { Token = jwt });
+            return Ok(new { Token = jwt, Role = role });
         }
 
         public class LoginRequest

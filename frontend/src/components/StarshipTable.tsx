@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './StarshipTable.css';
 
 const StarshipTable: React.FC = () => {
-  const { token, logout } = useAuth();
+  const { token, role, logout } = useAuth();
   const [starships, setStarships] = useState<Starship[]>([]);
   const [error, setError] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -194,15 +194,19 @@ const StarshipTable: React.FC = () => {
               onChange={(selected) => setClassFilter(selected.map((s) => s.value))}
               />
           </div>
-          <button className="btn btn-primary align-self-end" onClick={handleSeedData}>
-            Seed Data
-          </button>
-          <button
-            className="btn btn-success align-self-end"
-            onClick={() => { setEditingStarship(null); setShowForm(true); }}
-          >
-            Add Starship
-          </button>
+          { role === "Admin" && (
+            <>
+              <button className="btn btn-primary align-self-end" onClick={handleSeedData}>
+                Seed Data
+              </button>
+              <button
+                className="btn btn-success align-self-end"
+                onClick={() => { setEditingStarship(null); setShowForm(true); }}
+              >
+                Add Starship
+              </button>
+            </>
+            )}
           {message && <div className="mt-2">{message}</div>}
         </div>        
       </div>
@@ -330,7 +334,7 @@ const StarshipTable: React.FC = () => {
               </th>
               <th style={th}>Pilots</th>
               <th style={th}>Films</th>
-              <th style={th}>Actions</th>
+              {role === "Admin" && <th style={th}>Actions</th>}
             </tr>
           </thead>
 
@@ -385,27 +389,31 @@ const StarshipTable: React.FC = () => {
                   : <span style={{ color: "#888" }}>No pilots</span>}
                   </td>
                 <td style={td}>{ship.films?.join(", ")}</td>
-                {/* Actions: Edit/Delete */}
-                <td style={td}>
-                  {/* Edit Button */}
-                  <button
-                    onClick={() => {
-                      setEditingStarship(ship);
-                      setShowForm(true);
-                    }}
-                    className="btn btn-primary btn-sm me-2 mb-1 px-3"
-                  >
-                    Edit
-                  </button>
+                {role === "Admin" && (
+                  <>
+                    {/* Actions: Edit/Delete */}
+                    <td style={td}>
+                      {/* Edit Button */}
+                      <button
+                        onClick={() => {
+                          setEditingStarship(ship);
+                          setShowForm(true);
+                        }}
+                        className="btn btn-primary btn-sm me-2 mb-1 px-3"
+                      >
+                        Edit
+                      </button>
 
-                  {/* Delete Button */}
-                  <button
-                    onClick={() => handleDelete(ship.id)}
-                    className="btn btn-danger btn-sm mb-1"
-                  >
-                    Delete
-                  </button>
-                </td>
+                      {/* Delete Button */}
+                      <button
+                        onClick={() => handleDelete(ship.id)}
+                        className="btn btn-danger btn-sm mb-1"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>
