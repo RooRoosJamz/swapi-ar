@@ -1,0 +1,20 @@
+
+.starship-title {
+  color: #ffe81f;
+  text-shadow:
+    0 0 5px #ffe81f,
+    0 0 10px #ffcc00,
+    0 0 20px #ffaa00;
+  font-weight: bold;
+  font-size: 4rem;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.starship-title:hover {
+  text-shadow:
+    0 0 10px #ffe81f,
+    0 0 20px #ffcc00,
+    0 0 30px #ffaa00;
+  cursor: pointer;
+}

@@ -6,6 +6,7 @@ import StarshipForm from "../components/StarshipForm";
 import StarshipModal from "./StarshipModal";
 import Select from "react-select";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './StarshipTable.css';
 
 const StarshipTable: React.FC = () => {
   const { token, logout } = useAuth();
@@ -143,56 +144,69 @@ const StarshipTable: React.FC = () => {
   }
 
   return (
-    <div className="m-4">
-      <h2 className="mb-3">Starships</h2>
-
-      {/* See and Add Buttons */}
-      <div className="mb-3 d-flex flex-wrap gap-2">
-        <button className="btn btn-primary" onClick={handleSeedData}>
-          Seed Data
+    <div className="container-fluid p-4">
+      <div
+        className="align-items-center p-3 rounded mb-4"
+        style={{
+          backgroundImage: `url('/images/space.jpg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="mb-3 d-flex flex-wrap gap-2 align-items-center">
+          <img
+            src="/logo512.png"
+            alt="Starship Logo"
+            width="70"
+            height="70"
+            className="me-2"
+          />
+          <h2 className="mb-0 starship-title">STAR WARS Starships</h2>
+        </div>
+        {/* Search & Filters */}
+        <div className="mb-3 d-flex flex-wrap gap-2 text-white">
+          {/* Search */}
+          <input
+            type="text"
+            placeholder="Search starships..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control align-self-end" style={{ minWidth: "250px", width: "50%" }}
+          />
+          {/* Filter by Manufacturer */}
+          <div style={{ minWidth: "200px" }}>
+            <label>Filter by Manufacturer</label>
+            <Select
+              isMulti
+              options={manufacturerOptions}
+              value={manufacturerOptions.filter((o) => manufacturerFilter.includes(o.value))}
+              onChange={(selected) => setManufacturerFilter(selected.map((s) => s.value))}
+              />
+          </div>
+          {/* Filter by Starship Class */}
+          <div style={{ minWidth: "200px" }}>
+            <label>Filter by Starship Class</label>
+            <Select
+              isMulti
+              options={classOptions}
+              value={classOptions.filter((o) => classFilter.includes(o.value))}
+              onChange={(selected) => setClassFilter(selected.map((s) => s.value))}
+              />
+          </div>
+          <button className="btn btn-primary align-self-end" onClick={handleSeedData}>
+            Seed Data
           </button>
-        <button
-          className="btn btn-success"
-          onClick={() => { setEditingStarship(null); setShowForm(true); }}
-        >
-          Add Starship
-        </button>
-        {message && <div className="mt-2">{message}</div>}
+          <button
+            className="btn btn-success align-self-end"
+            onClick={() => { setEditingStarship(null); setShowForm(true); }}
+          >
+            Add Starship
+          </button>
+          {message && <div className="mt-2">{message}</div>}
+        </div>        
       </div>
-      
-      {/* Search & Filters */}
-      <div className="mb-3 d-flex flex-wrap gap-2">
-        {/* Search */}
-        <input
-          type="text"
-          placeholder="Search starships..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="form-control" style={{ minWidth: "250px", width: "50%" }}
-        />
-        {/* Filter by Manufacturer */}
-        <div style={{ minWidth: "200px" }}>
-          <label>Filter by Manufacturer</label>
-          <Select
-            isMulti
-            options={manufacturerOptions}
-            value={manufacturerOptions.filter((o) => manufacturerFilter.includes(o.value))}
-            onChange={(selected) => setManufacturerFilter(selected.map((s) => s.value))}
-          />
-        </div>
-        {/* Filter by Starship Class */}
-        <div style={{ minWidth: "200px" }}>
-          <label>Filter by Starship Class</label>
-          <Select
-            isMulti
-            options={classOptions}
-            value={classOptions.filter((o) => classFilter.includes(o.value))}
-            onChange={(selected) => setClassFilter(selected.map((s) => s.value))}
-          />
-        </div>
-      </div>
-
-
+    
       {/* Starship Table */}
       {starships.length === 0 ? (
         <p>Loading starships...</p>
