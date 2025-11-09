@@ -3,8 +3,9 @@ import api from "../api/axiosInstance";
 import { useAuth } from "../context/AuthContext";
 import { Starship } from "../types/Starship";
 import StarshipForm from "../components/StarshipForm"; 
-import StarshipModal from "./Starshipmodel";
+import StarshipModal from "./StarshipModal";
 import Select from "react-select";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const StarshipTable: React.FC = () => {
   const { token, logout } = useAuth();
@@ -142,75 +143,44 @@ const StarshipTable: React.FC = () => {
   }
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Starships</h2>
+    <div className="m-4">
+      <h2 className="mb-3">Starships</h2>
 
-      {/* Seed button */}
-      <div style={{ marginBottom: "1rem" }}>
-        <button
-          onClick={handleSeedData}
-          style={{
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            padding: "10px 15px",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
+      {/* See and Add Buttons */}
+      <div className="mb-3 d-flex flex-wrap gap-2">
+        <button className="btn btn-primary" onClick={handleSeedData}>
           Seed Data
-        </button>
-        {/* Add button */}
+          </button>
         <button
-          onClick={() => {
-            setEditingStarship(null);
-            setShowForm(true);
-          }}
-          style={{
-            backgroundColor: "#28a745",
-            color: "white",
-            border: "none",
-            padding: "10px 15px",
-            borderRadius: "5px",
-            cursor: "pointer",
-            marginLeft: "1rem",
-          }}
+          className="btn btn-success"
+          onClick={() => { setEditingStarship(null); setShowForm(true); }}
         >
           Add Starship
         </button>
-        {message && <p style={{ marginTop: "0.5rem" }}>{message}</p>}
+        {message && <div className="mt-2">{message}</div>}
       </div>
-
-      {/* Search Box */}
-      <div style={{ marginBottom: "1rem" }}>
+      
+      {/* Search & Filters */}
+      <div className="mb-3 d-flex flex-wrap gap-2">
+        {/* Search */}
         <input
           type="text"
           placeholder="Search starships..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: "8px",
-            width: "250px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
+          className="form-control" style={{ minWidth: "250px", width: "50%" }}
         />
-      </div>
-
-      {/* Filter Options - Manufacturer and Class */}
-      <div style={{ display: "flex", gap: "1rem", marginTop: "0.5rem", flexWrap: "wrap" }}>
+        {/* Filter by Manufacturer */}
         <div style={{ minWidth: "200px" }}>
           <label>Filter by Manufacturer</label>
           <Select
             isMulti
             options={manufacturerOptions}
             value={manufacturerOptions.filter((o) => manufacturerFilter.includes(o.value))}
-            onChange={(selected) =>
-              setManufacturerFilter(selected.map((s) => s.value))
-            }
+            onChange={(selected) => setManufacturerFilter(selected.map((s) => s.value))}
           />
         </div>
-
+        {/* Filter by Starship Class */}
         <div style={{ minWidth: "200px" }}>
           <label>Filter by Starship Class</label>
           <Select
@@ -222,6 +192,8 @@ const StarshipTable: React.FC = () => {
         </div>
       </div>
 
+
+      {/* Starship Table */}
       {starships.length === 0 ? (
         <p>Loading starships...</p>
       ) : (
@@ -347,6 +319,8 @@ const StarshipTable: React.FC = () => {
               <th style={th}>Actions</th>
             </tr>
           </thead>
+
+
           <tbody>
             {/* Apply filter before mapping */}
             {starships
@@ -405,30 +379,15 @@ const StarshipTable: React.FC = () => {
                       setEditingStarship(ship);
                       setShowForm(true);
                     }}
-                    style={{
-                      backgroundColor: "#007bff",
-                      color: "white",
-                      border: "none",
-                      padding: "5px 18px",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                      marginRight: "5px",
-                      marginBottom: "10px",
-                    }}
+                    className="btn btn-primary btn-sm me-2 mb-1 px-3"
                   >
                     Edit
                   </button>
+
                   {/* Delete Button */}
                   <button
                     onClick={() => handleDelete(ship.id)}
-                    style={{
-                      backgroundColor: "#dc3545",
-                      color: "white",
-                      border: "none",
-                      padding: "5px 10px",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                    }}
+                    className="btn btn-danger btn-sm mb-1"
                   >
                     Delete
                   </button>
@@ -468,3 +427,5 @@ const td: React.CSSProperties = {
 };
 
 export default StarshipTable;
+
+
