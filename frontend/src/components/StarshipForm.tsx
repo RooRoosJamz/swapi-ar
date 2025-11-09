@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../api/axiosInstance";
 import { Starship } from "../types/Starship";
 import Select, { MultiValue } from "react-select";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 interface StarshipFormProps {
   onAdd?: (newStarship: Starship) => void;
@@ -127,30 +128,30 @@ const StarshipForm: React.FC<StarshipFormProps> = ({ onAdd, onUpdate,existingSta
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>{existingStarship ? "Update Starship" : "Add New Starship"}</h3>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-      {Object.keys(form).map((key) => {
-        // Hide fields that are not editable by user
-        if (
-          key === "id" ||
-          key === "created" ||
-          key === "edited" ||
-          key === "url"
-        ) return null;
+    <form onSubmit={handleSubmit} className="p-3">
+      <h3 className="mb-4 text-center">
+        {existingStarship ? "Update Starship" : "Add New Starship"}
+      </h3>
 
-          // Show multi-select for films
+       <div className="row g-3">
+        {Object.keys(form).map((key) => {
+          if (["id", "created", "edited", "url"].includes(key)) return null;
+
+          {/** Multi-select for Films */}
           if (key === "films") {
             return (
-              <div key={key} style={{ minWidth: "250px" }}>
-                <label style={{ display: "block", marginBottom: "4px" }}>
-                  Films
-                </label>
+              <div className="col-md-6" key={key}>
                 <Select
                   isMulti
                   options={filmOptions}
-                  value={(form.films ?? []).map((f) => ({ value: f, label: f }))}
-                  onChange={(selected: MultiValue<{ value: string; label: string }>) =>
+                  placeholder="Select Films"
+                  value={(form.films ?? []).map((f) => ({
+                    value: f,
+                    label: f,
+                  }))}
+                  onChange={(
+                    selected: MultiValue<{ value: string; label: string }>
+                  ) =>
                     setForm({
                       ...form,
                       films: selected.map((s) => s.value),
@@ -161,48 +162,66 @@ const StarshipForm: React.FC<StarshipFormProps> = ({ onAdd, onUpdate,existingSta
             );
           }
 
-          // Show multi-select for pilots
-            if (key === "pilots") {
-                return (
-                <div key={key} style={{ minWidth: "250px" }}>
-                    <label style={{ display: "block", marginBottom: "4px" }}>
-                    Pilots
-                    </label>
-                    <Select
-                    isMulti
-                    options={pilotOptions}
-                    value={(form.pilots ?? []).map((p) => ({
-                        value: p,
-                        label: p,
-                    }))}
-                    onChange={(selected: MultiValue<{ value: string; label: string }>) =>
-                        setForm({
-                        ...form,
-                        pilots: selected.map((s) => s.value),
-                        })
-                    }
-                    />
-                </div>
-                );
-            }
-          // Regular input for other fields
+          {/** Multi-select for Pilots */}
+          if (key === "pilots") {
+            return (
+              <div className="col-md-6" key={key}>
+                <Select
+                  isMulti
+                  options={pilotOptions}
+                  value={(form.pilots ?? []).map((p) => ({
+                    value: p,
+                    label: p,
+                  }))}
+                  placeholder="Select Pilots"
+                  onChange={(
+                    selected: MultiValue<{ value: string; label: string }>
+                  ) =>
+                    setForm({
+                      ...form,
+                      pilots: selected.map((s) => s.value),
+                    })
+                  }
+                />
+              </div>
+            );
+          }
+
+          {/** Default input fields */}
           return (
-            <input
-              key={key}
-              name={key}
-              placeholder={key.replaceAll("_", " ")}
-              value={(form as any)[key] ?? ""}
-              onChange={handleChange}
-            />
+            <div className="col-md-6" key={key}>
+              <input
+                name={key}
+                className="form-control"
+                placeholder={key.replaceAll("_", " ")}
+                value={(form as any)[key] ?? ""}
+                onChange={handleChange}
+              />
+            </div>
           );
         })}
       </div>
-      <button type="submit" style={{ marginTop: "10px" }}>
-        {existingStarship ? "Update" : "Create"}
-      </button>
-      {message && <p>{message}</p>}
+
+      {/* Create/Update Button */}
+      <div className="mt-4 text-center">
+        <button type="submit" className="btn btn-primary px-4">
+          {existingStarship ? "Update" : "Create"}
+        </button>
+        {message && (
+          <div
+            className={`alert mt-3 ${
+              message.includes("successfully")
+                ? "alert-success"
+                : "alert-danger"
+            }`}
+          >
+            {message}
+          </div>
+        )}
+      </div>
     </form>
   );
 };
+
 
 export default StarshipForm;
