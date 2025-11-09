@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SWAPI_AR.Domain\SWAPI_AR.Domain.csproj" />
+    <ProjectReference Include="..\SWAPI_AR.Repository\SWAPI_AR.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
