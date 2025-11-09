@@ -76,4 +76,7 @@ npm start
 - Add/Edit/Delete starship utilizing buttons located on table
 - Sort column by clicking on column header
 
+### Main page for reference
+
+![Description of image](assets/starship-table.JPG)
 
