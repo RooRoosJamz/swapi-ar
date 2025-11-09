@@ -182,6 +182,7 @@ const StarshipTable: React.FC = () => {
               options={manufacturerOptions}
               value={manufacturerOptions.filter((o) => manufacturerFilter.includes(o.value))}
               onChange={(selected) => setManufacturerFilter(selected.map((s) => s.value))}
+              className="text-black"
               />
           </div>
           {/* Filter by Starship Class */}
@@ -192,6 +193,7 @@ const StarshipTable: React.FC = () => {
               options={classOptions}
               value={classOptions.filter((o) => classFilter.includes(o.value))}
               onChange={(selected) => setClassFilter(selected.map((s) => s.value))}
+              className="text-black"
               />
           </div>
           { role === "Admin" && (
