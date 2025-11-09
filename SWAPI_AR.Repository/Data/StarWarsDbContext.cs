@@ -29,6 +29,20 @@ namespace SWAPI_AR.Repository.Data
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, jsonOptions),
                     v => JsonSerializer.Deserialize<List<string>>(v, jsonOptions) ?? new List<string>());
+
+            // Add Indexes
+            // Note: Indexes not necessary for small datasets, but added here for demonstration
+            modelBuilder.Entity<Starship>()
+                .HasIndex(s => s.Name)
+                .HasDatabaseName("IX_Starship_Name");
+
+            modelBuilder.Entity<Starship>()
+                .HasIndex(s => s.Manufacturer)
+                .HasDatabaseName("IX_Starship_Manufacturer");
+
+            modelBuilder.Entity<Starship>()
+                .HasIndex(s => s.StarshipClass)
+                .HasDatabaseName("IX_StarshipClass");
         }
     }
 }

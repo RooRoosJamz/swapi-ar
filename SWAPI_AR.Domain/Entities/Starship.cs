@@ -9,43 +9,43 @@ namespace SWAPI_AR.Domain.Entities
         public int Id { get; set; }
         [JsonPropertyName("name")]
         [Required]
-        [MaxLength(50)]
+        [MaxLength(200)]
         public string Name { get; set; } = string.Empty;
         [JsonPropertyName("model")]
-        [MaxLength(50)]
+        [MaxLength(200)]
         public string Model { get; set; } = string.Empty;
         [JsonPropertyName("manufacturer")]
-        [MaxLength(50)]
+        [MaxLength(200)]
         public string Manufacturer { get; set; } = string.Empty;
         [JsonPropertyName("cost_in_credits")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string CostInCredits { get; set; } = string.Empty;
         [JsonPropertyName("length")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Length { get; set; } = string.Empty;
         [JsonPropertyName("max_atmosphering_speed")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string MaxAtmospheringSpeed { get; set; } = string.Empty;
         [JsonPropertyName("crew")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Crew { get; set; } = string.Empty;
         [JsonPropertyName("passengers")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Passengers { get; set; } = string.Empty;
         [JsonPropertyName("cargo_capacity")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string CargoCapacity { get; set; } = string.Empty;
         [JsonPropertyName("consumables")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Consumables { get; set; } = string.Empty;
         [JsonPropertyName("hyperdrive_rating")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string HyperdriveRating { get; set; } = string.Empty;
         [JsonPropertyName("MGLT")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string MGLT { get; set; } = string.Empty;
         [JsonPropertyName("starship_class")]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string StarshipClass { get; set; } = string.Empty;
         [JsonPropertyName("pilots")]
         public List<string> Pilots { get; set; } = new();
